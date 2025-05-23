@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'project-1', url: 'https://github.com/suoton/proj-mdp-152-155.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'docker build -t your-app .'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'docker run -d -p 8081:8080 your-app'
+            }
+        }
+    }
+}
