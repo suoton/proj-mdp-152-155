@@ -1,5 +1,5 @@
 # Dockerfile
-FROM maven:3.6.3-jdk-8 AS builder
+FROM maven:3.6.3-jdk-17 AS builder
 WORKDIR /app
 COPY . .
 RUN mvn clean package
