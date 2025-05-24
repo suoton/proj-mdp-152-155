@@ -1,0 +1,10 @@
+- hosts: localhost
+  tasks:
+    - name: Delete Kubernetes cluster if it exists
+      command: kops delete cluster --name=my-k8s-cluster.k8s.local --yes --state=s3://suoton
+      register: delete_cluster_output
+      ignore_errors: true
+
+    - name: Show output of cluster deletion
+      debug:
+        var: delete_cluster_output.stdout
