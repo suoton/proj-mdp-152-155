@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: suoton/calculator
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: suoton/calculator
+  template:
+    metadata:
+      labels:
+        app: suoton/calculator
+    spec:
+      containers:
+      - name: suoton/calculator
+        image: suoton/calculator:latest
+        ports:
+        - containerPort: 80
+~
