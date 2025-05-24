@@ -1,0 +1,36 @@
+- hosts: localhost
+  tasks:
+    - name: Check if the Kubernetes cluster exists
+      command: kops get clusters --state=s3://suoton
+      register: cluster_check
+      ignore_errors: true
+
+    - name: Delete existing Kubernetes cluster if it exists
+      command: kops delete cluster --name=my-k8s-cluster.k8s.local --yes --state=s3://suoton
+      when: cluster_check.rc == 0
+      ignore_errors: true
+
+    - name: Create Kubernetes cluster
+      command: >
+        kops create cluster
+        --name=my-k8s-cluster.k8s.local
+        --zones=eu-north-1a,eu-north-1b
+        --node-count=2
+        --node-size=t3.medium
+        --control-plane-size=t3.medium
+        --dns-zone=k8s.local
+        --state=s3://suoton
+      register: create_cluster_output
+
+    - name: Update Kubernetes cluster
+      command: >
+        kops update cluster --name=my-k8s-cluster.k8s.local --yes --state=s3://suoton
+      register: update_cluster_output
+
+    - name: Show output of cluster creation
+      debug:
+        var: create_cluster_output.stdout
+
+    - name: Show output of cluster update
+      debug:
+        var: update_cluster_output.stdout
