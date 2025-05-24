@@ -1,0 +1,23 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install AWS CLI
+      yum:
+        name: aws-cli
+        state: present
+
+    - name: Install KOPS
+      get_url:
+        url: "https://github.com/kubernetes/kops/releases/latest/download/kops-linux-amd64"
+        dest: /usr/local/bin/kops
+        mode: '0755'
+
+    - name: Get kubectl version
+      command: curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt
+      register: kubectl_version
+
+    - name: Install Kubectl
+      get_url:
+        url: "https://storage.googleapis.com/kubernetes-release/release/{{ kubectl_version.stdout }}/bin/linux/amd64/kubectl"
+        dest: /usr/local/bin/kubectl
+        mode: '0755'
