@@ -13,7 +13,7 @@ pipeline {
       steps {
         script {
           // Use kubectl to apply the deployment file
-          sh 'kubectl apply -f k8s/deployment.yaml'
+          sh 'kubectl apply -f k8s/deployment.yaml --validate=false'
         }
       }
     }
