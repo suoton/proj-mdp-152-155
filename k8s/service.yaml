@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: suoton/calculator-service
+  name: calculator-service
 spec:
   type: LoadBalancer
   selector:
-    app: suoton/calculator
+    app: calculator
   ports:
     - port: 80
       targetPort: 80
