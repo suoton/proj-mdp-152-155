@@ -17,4 +17,3 @@ spec:
         image: suoton/calculator:latest
         ports:
         - containerPort: 80
-~
